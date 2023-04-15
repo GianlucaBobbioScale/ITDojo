@@ -1,7 +1,7 @@
 import React from 'react';
 import { createTheme, ThemeProvider } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import BadTaskList from './BadTaskList';
+import TaskList from './TaskList'
 
 const darkTheme = createTheme({
   palette: {
@@ -13,7 +13,7 @@ function App(props) {
   return (
     <ThemeProvider theme={darkTheme}>
       <CssBaseline />
-      <BadTaskList />
+      <TaskList />
     </ThemeProvider>
   );
 }
