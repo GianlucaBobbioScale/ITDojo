@@ -5,7 +5,6 @@ import { Box } from "@material-ui/core";
 import useTaskHandler from "./hooks/useTaskHandler";
 //Components
 import TaskDisplay from "./components";
-import ButtonList from "./components/ButtonList";
 import NewTaskDialog from "./components/NewTaskDialog";
 import RemoveTaskDialog from "./components/RemoveTaskDialog";
 
@@ -57,9 +56,6 @@ const GodTaskList = () => {
         handleToggle={handleToggle}
         setTaskToRemove={setTaskToRemove}
         setShowRemoveTaskDialog={setShowRemoveTaskDialog}
-      />
-      <ButtonList
-        selectedTasks={selectedTasks}
         setShowNewTaskDialog={setShowNewTaskDialog}
         setShowRemoveTasksDialog={setShowRemoveTasksDialog}
       />

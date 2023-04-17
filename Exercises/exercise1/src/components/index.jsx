@@ -1,4 +1,5 @@
 import React from "react";
+//MUI
 import {
   List,
   ListItem,
@@ -9,6 +10,8 @@ import {
   Checkbox,
   Box,
 } from "@material-ui/core";
+//Components
+import ButtonList from "./ButtonList";
 
 const TaskDisplay = ({
   tasks,
@@ -16,6 +19,8 @@ const TaskDisplay = ({
   handleToggle,
   setTaskToRemove,
   setShowRemoveTaskDialog,
+  setShowNewTaskDialog,
+  setShowRemoveTasksDialog
 }) => {
   return (
     <Box>
@@ -47,6 +52,13 @@ const TaskDisplay = ({
           ))}
         </List>
       </Box>
+      {/* I think this component here is wrong, Because this file is called TaskDisplay.
+       The only function it should have is to show the tasks, not buttons. */}
+      <ButtonList
+        selectedTasks={selectedTasks}
+        setShowNewTaskDialog={setShowNewTaskDialog}
+        setShowRemoveTasksDialog={setShowRemoveTasksDialog}
+      />
     </Box>
   );
 };
