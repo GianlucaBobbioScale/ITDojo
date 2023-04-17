@@ -1,20 +1,13 @@
 import React, { useState } from "react";
 import {
   List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
   Button,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
   TextField,
-  ListItemIcon,
-  Checkbox,
   Box
 } from "@material-ui/core";
 
+import TaskModal from "./TaskModal";
+import TaskItem from "./TaskItem";
 // This works as a kind of DB
 const useTaskHandler = () => {
   const [tasks, setTasksState] = useState([]);
@@ -49,17 +42,25 @@ const BadTaskList = () => {
     setShowNewTaskDialog(false);
   };
 
-  const handleRemoveTask = () => {
-    removeTask(taskToRemove);
-    setTaskToRemove(null);
-    setShowRemoveTaskDialog(false);
-  };
 
   const handleRemoveTasks = () => {
-    removeTasks(selectedTasks);
-    setSelectedTasks([]);
-    setShowRemoveTasksDialog(false);
+    if (showRemoveTaskDialog){
+      removeTask(taskToRemove)
+      setTaskToRemove(null);
+      setShowRemoveTaskDialog(false);
+    }
+    else {
+      removeTasks(selectedTasks)
+      setSelectedTasks([]);
+      setShowRemoveTasksDialog(false)
+    }
   };
+
+
+  const handleOnCloseRemoveTask = () => {
+    setShowRemoveTaskDialog(false)
+    setShowRemoveTasksDialog(false)
+  }
 
   const handleToggle = (task) => {
     const currentIndex = selectedTasks.indexOf(task);
@@ -80,24 +81,15 @@ const BadTaskList = () => {
       <Box mb={2}>
       <List style={{border: '1px solid grey'}}>
         {tasks.map((task, index) => (
-          <ListItem key={index}>
-            <ListItemIcon>
-              <Checkbox onChange={() => handleToggle(task)} checked={selectedTasks.includes(task)} />
-            </ListItemIcon>
-            <ListItemText primary={task} />
-            <ListItemSecondaryAction>
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={() => {
-                  setTaskToRemove(task);
-                  setShowRemoveTaskDialog(true);
-                }}
-              >
-                Remove
-              </Button>
-            </ListItemSecondaryAction>
-          </ListItem>
+          <TaskItem key={index}
+            onChangeCheckbox={() => handleToggle(task)} 
+            isChecked={selectedTasks.includes(task)}
+            itemText={task}
+            onClickSecondaryButton={() => {
+              setTaskToRemove(task);
+              setShowRemoveTaskDialog(true)
+            }}
+          />
         ))}
       </List>
       </Box>
@@ -112,41 +104,28 @@ const BadTaskList = () => {
       >
         Remove Selected Tasks
       </Button>
-      <Dialog open={showNewTaskDialog} onClose={() => setShowNewTaskDialog(false)}>
-        <DialogTitle>Add New Task</DialogTitle>
-        <DialogContent>
-          <TextField
+      <TaskModal showTaskDialog={showNewTaskDialog} 
+          onClose={() => setShowNewTaskDialog(false)} 
+          onClickPrimaryAction={handleAddTask}
+          textPrimaryAction="Add Task"
+          textSecondaryAction="Cancel"
+          title={"Add New Task"}>
+        <TextField
             label="Task Name"
             value={newTaskName}
             onChange={(e) => setNewTaskName(e.target.value)}
             fullWidth
           />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleAddTask} color="primary">Add Task</Button>
-          <Button onClick={() => setShowNewTaskDialog(false)} color="secondary">Cancel</Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={showRemoveTaskDialog} onClose={() => setShowRemoveTaskDialog(false)}>
-        <DialogTitle>Remove Task</DialogTitle>
-        <DialogContent>
-          <p>Are you sure you want to remove this task?</p>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleRemoveTask} color="primary">Yes</Button>
-          <Button onClick={() => setShowRemoveTaskDialog(false)} color="secondary">No</Button>
-        </DialogActions>
-      </Dialog>
-      <Dialog open={showRemoveTasksDialog} onClose={() => setShowRemoveTasksDialog(false)}>
-        <DialogTitle>Remove Selected Tasks</DialogTitle>
-        <DialogContent>
-          <p>Are you sure you want to remove the selected tasks?</p>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleRemoveTasks} color="primary">Yes</Button>
-          <Button onClick={() => setShowRemoveTasksDialog(false)} color="secondary">No</Button>
-        </DialogActions>
-      </Dialog>
+      </TaskModal>
+      <TaskModal showTaskDialog={showRemoveTaskDialog || showRemoveTasksDialog} 
+          onClose={handleOnCloseRemoveTask}
+          onClickPrimaryAction={handleRemoveTasks}
+          textPrimaryAction="Yes"
+          textSecondaryAction="No"
+          title={"Remove Task"}>
+        {showRemoveTaskDialog && <p>Are you sure you want to remove this task?</p>}
+        {showRemoveTasksDialog && <p>Are you sure you want to remove the selected tasks?</p>}
+      </TaskModal>
     </Box>
   );
 };
