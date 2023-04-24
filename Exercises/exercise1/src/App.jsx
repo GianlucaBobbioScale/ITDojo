@@ -1,11 +1,11 @@
-import React from 'react';
-import { createTheme, ThemeProvider } from '@material-ui/core/styles';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import BadTaskList from './BadTaskList';
+import React from "react";
+import { createTheme, ThemeProvider } from "@material-ui/core/styles";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import BadTaskList from "./BadTaskList";
 
 const darkTheme = createTheme({
   palette: {
-    type: 'dark',
+    type: "dark",
   },
 });
 
