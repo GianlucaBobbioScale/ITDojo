@@ -9,25 +9,12 @@ import NewTaskDialog from "./components/NewTaskDialog";
 import RemoveTaskDialog from "./components/RemoveTaskDialog";
 
 const GodTaskList = () => {
-  const { tasks, setTasks, removeTask, removeTasks } = useTaskHandler();
-  const [newTaskName, setNewTaskName] = useState("");
+  const { tasks,addNewTask,removeTask, removeTasks } = useTaskHandler();
   const [showNewTaskDialog, setShowNewTaskDialog] = useState(false);
   const [taskToRemove, setTaskToRemove] = useState(null);
   const [showRemoveTaskDialog, setShowRemoveTaskDialog] = useState(false);
   const [selectedTasks, setSelectedTasks] = useState([]);
   const [showRemoveTasksDialog, setShowRemoveTasksDialog] = useState(false);
-
-  const handleAddTask = () => {
-    setTasks([...tasks, newTaskName]);
-    setNewTaskName("");
-    setShowNewTaskDialog(false);
-  };
-
-  const handleRemoveTask = () => {
-    removeTask(taskToRemove);
-    setTaskToRemove(null);
-    setShowRemoveTaskDialog(false);
-  };
 
   const handleRemoveTasks = () => {
     removeTasks(selectedTasks);
@@ -56,20 +43,19 @@ const GodTaskList = () => {
         handleToggle={handleToggle}
         setTaskToRemove={setTaskToRemove}
         setShowRemoveTaskDialog={setShowRemoveTaskDialog}
-        setShowNewTaskDialog={setShowNewTaskDialog}
-        setShowRemoveTasksDialog={setShowRemoveTasksDialog}
       />
       <NewTaskDialog
         showNewTaskDialog={showNewTaskDialog}
         setShowNewTaskDialog={setShowNewTaskDialog}
-        newTaskName={newTaskName}
-        setNewTaskName={setNewTaskName}
-        handleAddTask={handleAddTask}
+        addNewTask={addNewTask}
       />
       <RemoveTaskDialog
+        selectedTasks={selectedTasks}
+        taskToRemove={taskToRemove}
+        removeTask={removeTask}
+        setTaskToRemove={setTaskToRemove}
         showRemoveTaskDialog={showRemoveTaskDialog}
         setShowRemoveTaskDialog={setShowRemoveTaskDialog}
-        handleRemoveTask={handleRemoveTask}
         showRemoveTasksDialog={showRemoveTasksDialog}
         setShowRemoveTasksDialog={setShowRemoveTasksDialog}
         handleRemoveTasks={handleRemoveTasks}

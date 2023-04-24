@@ -1,17 +1,8 @@
 import React from "react";
 //MUI
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
-  Button,
-  ListItemIcon,
-  Checkbox,
-  Box,
-} from "@material-ui/core";
+import { List, Box } from "@material-ui/core";
 //Components
-import ButtonList from "./ButtonList";
+import TaskListItem from "./TaskListItem";
 
 const TaskDisplay = ({
   tasks,
@@ -19,8 +10,6 @@ const TaskDisplay = ({
   handleToggle,
   setTaskToRemove,
   setShowRemoveTaskDialog,
-  setShowNewTaskDialog,
-  setShowRemoveTasksDialog
 }) => {
   return (
     <Box>
@@ -28,37 +17,17 @@ const TaskDisplay = ({
       <Box mb={2}>
         <List style={{ border: "1px solid grey" }}>
           {tasks.map((task, index) => (
-            <ListItem key={index}>
-              <ListItemIcon>
-                <Checkbox
-                  onChange={() => handleToggle(task)}
-                  checked={selectedTasks.includes(task)}
-                />
-              </ListItemIcon>
-              <ListItemText primary={task} />
-              <ListItemSecondaryAction>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  onClick={() => {
-                    setTaskToRemove(task);
-                    setShowRemoveTaskDialog(true);
-                  }}
-                >
-                  Remove
-                </Button>
-              </ListItemSecondaryAction>
-            </ListItem>
+            <TaskListItem
+              task={task}
+              index={index}
+              handleToggle={handleToggle}
+              setTaskToRemove={setTaskToRemove}
+              selectedTasks={selectedTasks}
+              setShowRemoveTaskDialog={setShowRemoveTaskDialog}
+            />
           ))}
         </List>
       </Box>
-      {/* I think this component here is wrong, Because this file is called TaskDisplay.
-       The only function it should have is to show the tasks, not buttons. */}
-      <ButtonList
-        selectedTasks={selectedTasks}
-        setShowNewTaskDialog={setShowNewTaskDialog}
-        setShowRemoveTasksDialog={setShowRemoveTasksDialog}
-      />
     </Box>
   );
 };

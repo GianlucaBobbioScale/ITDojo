@@ -3,9 +3,9 @@ import { useState } from "react";
 // This works as a kind of DB
 const useTaskHandler = () => {
   const [tasks, setTasksState] = useState([]);
-
-  const setTasks = (tasks) => {
-    setTasksState(tasks);
+  
+  const addNewTask = (newTask) => {
+    setTasksState([...tasks, newTask]);
   };
 
   const removeTask = (taskToRemove) => {
@@ -16,7 +16,7 @@ const useTaskHandler = () => {
     setTasksState(tasks.filter((task) => !tasksToRemove.includes(task)));
   };
 
-  return { tasks, setTasks, removeTask, removeTasks };
+  return { tasks, addNewTask, removeTask, removeTasks };
 };
 
 export default useTaskHandler;

@@ -8,13 +8,22 @@ import {
 } from "@material-ui/core";
 
 const RemoveTaskDialog = ({
+  selectedTasks,
+  taskToRemove,
+  removeTask,
+  setTaskToRemove,
   showRemoveTaskDialog,
   setShowRemoveTaskDialog,
-  handleRemoveTask,
   showRemoveTasksDialog,
   setShowRemoveTasksDialog,
   handleRemoveTasks,
 }) => {
+  const handleRemoveTask = () => {
+    removeTask(taskToRemove);
+    setTaskToRemove(null);
+    setShowRemoveTaskDialog(false);
+  };
+
   return (
     <>
       <Dialog
@@ -43,7 +52,9 @@ const RemoveTaskDialog = ({
       >
         <DialogTitle>Remove Selected Tasks</DialogTitle>
         <DialogContent>
-          <Box component="p">Are you sure you want to remove the selected tasks?</Box>
+          <Box component="p">
+            Are you sure you want to remove the selected tasks?
+          </Box>
         </DialogContent>
         <DialogActions>
           <Button onClick={handleRemoveTasks} color="primary">
@@ -57,6 +68,14 @@ const RemoveTaskDialog = ({
           </Button>
         </DialogActions>
       </Dialog>
+      <Button
+        variant="contained"
+        color="secondary"
+        onClick={() => setShowRemoveTasksDialog(true)}
+        disabled={selectedTasks.length === 0}
+      >
+        Remove Selected Tasks
+      </Button>
     </>
   );
 };
