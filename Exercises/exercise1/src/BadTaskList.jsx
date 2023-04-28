@@ -1,26 +1,17 @@
 import React, { useState } from "react";
-import {
-  List,
-  ListItem,
-  ListItemText,
-  ListItemSecondaryAction,
-  Button,
-  TextField,
-  ListItemIcon,
-  Checkbox,
-  Box,
-  Typography,
-} from "@material-ui/core";
+import { TextField, Box, Typography } from "@material-ui/core";
 import { useTaskHandler } from "./useTaskHandler";
 import { DialogElement } from "./DialogElement";
-import { ButtonArray } from "./ButtonArray";
+import { ListComponent } from "./ListComponent";
 
 const BadTaskList = () => {
   const { tasks, addTask, removeTasks } = useTaskHandler();
-  const [newTaskName, setNewTaskName] = useState("");
   const [showDialog, setShowDialog] = useState("");
-  const [singleTaskToRemove, setSingleTaskToRemove] = useState("");
   const [selectedTasks, setSelectedTasks] = useState([]);
+  const [newTaskName, setNewTaskName] = useState("");
+  const [singleTaskToRemove, setSingleTaskToRemove] = useState("");
+
+  const selectedTasksHook = { selectedTasks, setSelectedTasks };
 
   const handleAddTask = () => {
     const added = addTask(newTaskName);
@@ -43,17 +34,9 @@ const BadTaskList = () => {
     setShowDialog("");
   };
 
-  const handleToggle = (task) => {
-    const taskId = task.id;
-    const currentTaskIsSelected = selectedTasks.includes(taskId);
-    const newSelectedTasks = [...selectedTasks];
-    if (currentTaskIsSelected) {
-      const currentIndex = selectedTasks.findIndex((e) => e === taskId);
-      newSelectedTasks.splice(currentIndex, 1);
-    } else {
-      newSelectedTasks.push(taskId);
-    }
-    setSelectedTasks(newSelectedTasks);
+  const handleRemoveSingleTask = (task) => {
+    setSingleTaskToRemove(task.id);
+    setShowDialog("deleteTask");
   };
   const dialogs = {
     addNewTask: {
@@ -134,36 +117,12 @@ const BadTaskList = () => {
 
   return (
     <Box sx={{ width: 500 }}>
-      <h1>Task List</h1>
-      <Box mb={2}>
-        <List style={{ border: "1px solid grey" }}>
-          {tasks.map((task) => (
-            <ListItem key={task.id}>
-              <ListItemIcon>
-                <Checkbox
-                  onChange={() => handleToggle(task)}
-                  checked={selectedTasks.includes(task.id)}
-                />
-              </ListItemIcon>
-              <ListItemText primary={task.content} />
-              <ListItemSecondaryAction>
-                <Button
-                  variant="outlined"
-                  color="secondary"
-                  onClick={() => {
-                    setSingleTaskToRemove(task.id);
-                    setShowDialog("deleteTask");
-                  }}
-                >
-                  Remove
-                </Button>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))}
-        </List>
-      </Box>
-
-      <ButtonArray actions={mainButtons} variant="contained" />
+      <ListComponent
+        tasks={tasks}
+        selectedTasksHook={selectedTasksHook}
+        mainButtons={mainButtons}
+        singleTaskAction={handleRemoveSingleTask}
+      />
 
       {!!showDialog ? (
         <DialogElement
