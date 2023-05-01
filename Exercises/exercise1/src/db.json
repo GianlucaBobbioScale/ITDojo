@@ -1,0 +1,30 @@
+[
+  {
+    "name": "name",
+    "label": "Name",
+    "type": "text",
+    "errorMessage": "It's Required - [5 characters max]",
+    "validations": { "required": true, "maxCharacters": 5 }
+  },
+  {
+    "name": "surname",
+    "label": "Surname",
+    "type": "text",
+    "errorMessage": "[20 characters max]",
+    "validations": { "required": false, "maxCharacters": 20 }
+  },
+  {
+    "name": "password",
+    "label": "Password",
+    "type": "password",
+    "errorMessage": "It's Required - [20 characters max]",
+    "validations": { "required": true, "maxCharacters": 20 }
+  },
+  {
+    "name": "date",
+    "label": "Date",
+    "type": "date",
+    "errorMessage": "It's Required",
+    "validations": { "required": true, "maxCharacters": false }
+  }
+]
