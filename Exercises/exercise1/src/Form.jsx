@@ -52,33 +52,42 @@ const Form = ({ fields }) => {
       >
         {fields.map((field) => {
           return (
-            <FormControl
-              fullWidth
-              className={classes.formColumns}
-              label={field.label}
-              key={field.name}
-              //Check if the field has an error and check if an error exist
-              error={errors[field.name] && errors[field.name].errorExist}
+            <Box
+              className={
+                field.halfWidth
+                  ? classes.halfWidthFormControl
+                  : classes.formColumns
+              }
             >
-              <InputLabel htmlFor={field.name}>{field.label}</InputLabel>
-              <Input
-                id={field.name}
-                name={field.name}
-                required={field.required}
-                aria-describedby={field.helperText}
-                type={field.type}
+              <FormControl
+                fullWidth={!field.halfWidth}
                 label={field.label}
-                placeholder={field.placeholder}
-                //I need add this value because the input is controlled
-                value={formValues[field.name] || ""}
-                onChange={handleChange}
-              />
-              <FormHelperText>
-                {errors[field.name] && errors[field.name].errorExist
-                  ? errors[field.name].errorMessage
-                  : field.helperText}
-              </FormHelperText>
-            </FormControl>
+                key={field.name}
+                //Check if the field has an error and check if an error exist
+                error={errors[field.name] && errors[field.name].errorExist}
+              >
+                <InputLabel htmlFor={field.name} shrink>
+                  {field.label}
+                </InputLabel>
+                <Input
+                  id={field.name}
+                  name={field.name}
+                  required={field.required}
+                  aria-describedby={field.helperText}
+                  type={field.type}
+                  label={field.label}
+                  placeholder={field.placeholder}
+                  //I need add this value because the input is controlled
+                  value={formValues[field.name] || ""}
+                  onChange={handleChange}
+                />
+                <FormHelperText>
+                  {errors[field.name] && errors[field.name].errorExist
+                    ? errors[field.name].errorMessage
+                    : field.helperText}
+                </FormHelperText>
+              </FormControl>
+            </Box>
           );
         })}
         <Button variant="contained" type="submit">

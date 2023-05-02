@@ -14,10 +14,25 @@ export const passwordValidation = (valuePassword, confirmPassword) => {
     };
   }
 
-  if (valuePassword !== confirmPassword) {
+  if (confirmPassword && valuePassword !== confirmPassword) {
     return {
       errorExist: true,
       errorMessage: "Passwords don't match",
+    };
+  }
+
+  return {
+    errorExist: false,
+    errorMessage: "",
+  };
+};
+
+export const makeSecondFieldMandatory = (firstInput, secondInput) => {
+
+  if (firstInput.length > 0 && secondInput.length === 0) {
+    return {
+      errorExist: true,
+      errorMessage: "This field is mandatory",
     };
   }
 

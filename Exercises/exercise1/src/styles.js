@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core";
 
-export const useStyles = makeStyles({
+export const useStyles = makeStyles((theme) => ({
   formContainer: {
     display: "flex",
     alignItems: "center",
@@ -13,9 +13,12 @@ export const useStyles = makeStyles({
     justifyContent: "center",
     alignItems: "center",
   },
-  formColumns:{
+  formColumns: {
     marginBottom: "20px",
-    display: "flex",
-    flexDirection: "column",
-  }
-});
+    width: "100%",
+  },
+  halfWidthFormControl: {
+    width: "50%",
+    marginBottom: "20px",
+  },
+}));

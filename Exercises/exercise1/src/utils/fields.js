@@ -1,4 +1,7 @@
-import { passwordValidation } from "./fieldValidation";
+import {
+  makeSecondFieldMandatory,
+  passwordValidation,
+} from "./fieldValidation";
 
 //To create a new form you need to pass an array with this props
 //If you want to add a validation you need use formValues.${name} to get the value of the field
@@ -35,24 +38,40 @@ export const fields = [
     required: true,
     helperText: "Please enter your password",
     label: "Password",
+    halfWidth: true,
     validation: (formValues) => {
       return passwordValidation(
         formValues.Password,
+        //This parameter is optional. You can used if you want to have a confirm password input
         formValues.ConfirmPassword
       );
     },
+
   },
   {
     name: "ConfirmPassword",
     type: "password",
+    //If you change this prop to false the function makeSecondFieldMandatory will be called and verify if you have a value in the first input
     required: true,
     helperText: "Please enter your password again",
     label: "Confirm your password",
+    halfWidth: true,
     validation: (formValues) => {
-      return passwordValidation(
+      const { errorExist } = passwordValidation(
         formValues.Password,
         formValues.ConfirmPassword
       );
+      if (errorExist) {
+        return passwordValidation(
+          formValues.Password,
+          formValues.ConfirmPassword
+        );
+      } else {
+        return makeSecondFieldMandatory(
+          formValues.Password,
+          formValues.ConfirmPassword
+        );
+      }
     },
   },
   {
