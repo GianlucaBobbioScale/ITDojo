@@ -1,0 +1,59 @@
+{
+  "inputs": [
+    {
+      "id": 1,
+      "name": "name",
+      "label": "Name",
+      "type": "text",
+      "placeholder": "Enter your name",
+      "required": true,
+      "validates": [
+        {
+          "regexString": "^[a-zA-Z]+(\\s[a-zA-Z]+)+$",
+          "message": "Name must include at least a first name and a last name."
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "name": "email",
+      "label": "Email",
+      "type": "email",
+      "placeholder": "Enter your email",
+      "required": true,
+      "validates": [
+        {
+          "regexString": "^\\S+@\\S+\\.\\S+$",
+          "message": "Email is not valid."
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "name": "password",
+      "label": "Password",
+      "type": "custom-password",
+      "placeholder": "Enter your password",
+      "required": true,
+      "validates": [
+        {
+          "regexString": "^.{8,}$",
+          "message": "Password must be at least 8 characters long."
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "name": "date",
+      "label": "Date",
+      "type": "date",
+      "placeholder": "Enter a date",
+      "required": true,
+      "extraProps": {
+        "min": "2023-01-01",
+        "max": "2023-12-31"
+      },
+      "validates": []
+    }
+  ]
+}
